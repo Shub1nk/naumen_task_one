@@ -1,7 +1,8 @@
 import { applyMiddleware } from 'redux';
 
 const logger = store => next => action => {
-  console.log(`Action type - ${action.type}\n\rPayload - ${action.payload}`);
+  console.log(`Action type - ${action.type}`);
+  console.log('Payload -', action.payload);
   next(action);
 }
 
