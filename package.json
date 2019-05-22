@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "shub1nk@yandex.ru",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shub1nk/naumen_task_one.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shub1nk/naumen_task_one/issues"
+  },
+  "homepage": "https://github.com/Shub1nk/naumen_task_one#readme"
 }
