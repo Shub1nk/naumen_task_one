@@ -43,7 +43,7 @@ const addRows = (state, action) => ({
 
 const removeRows = (state, action) => ({
   ...state,
-  listClients: state.listClients.filter(client => client.id != action.payload)
+  listClients: state.listClients.filter(client => client.id !== action.payload)
 });
 
 function phonebook (state = initialState, action) {
