@@ -9,9 +9,9 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Header />
+        {/* <Header /> */}
         <Phonebook />
-        <Footer />
+        {/* <Footer /> */}
       </Fragment>
     )
   }
