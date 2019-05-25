@@ -74,13 +74,12 @@ class Phonebook extends Component {
 
     const {searchString} = this.state
     const {listClients} = this.props;
+    let counterRow;
 
-    const regex = new RegExp(`${this.state.searchString}`, 'gi');
-
-    let listItems = listClients;
+    const regexp = new RegExp(`${this.state.searchString}`, 'gi');
 
     if (searchString) {
-      listItems = listClients.filter(item => (regex.test(item.fullname) || regex.test(item.phonenum)));
+      counterRow = (listClients.filter(item => (regexp.test(item.fullname) || regexp.test(item.phonenum)))).length;
     }
 
     return (
@@ -89,30 +88,36 @@ class Phonebook extends Component {
           <input type='text' name='search' value={this.state.searchString} onChange={this.onChangeHandler.bind(this, "searchString")} placeholder="Введите имя или номер"
           autoComplete="off" autoFocus/>
           {this.state.searchString && <span onClick={this.clearStringSearch}></span>}
-          {this.state.searchString && <p className="b-phonebook__coincidence">Совпадений: {listItems.length}</p>}
+          {this.state.searchString && <p className="b-phonebook__coincidence">Совпадений: {counterRow}</p>}
         </div>
         <ul className="b-list-contacts">
           {
-            listItems.map((row, i) => {
-              return (
-                <Row key={row.id} row={row} highlight={highlight}/>
-              )
-            })
+            counterRow !== 0 ?
+              listClients.map((row, i) => {
+                return (
+                  <Row key={row.id} row={row} highlight={highlight} searchString={searchString}/>
+                )
+              })
+              :
+              <li className="b-list-contacts__not-found">По вашему запросу ничего не найдено</li>
           }
         </ul>
         <hr/>
-        {/* TODO: А может это в один компонент вынести */}
-        <form onSubmit={this.addRows}>
-          <input type='text' name='fullname' value={this.state.fullname} onChange={this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
-          <br/>
-          <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
-          maxLength="10" title="Введите номер сотового телефона"/>
-          <br/>
-          <button type="submit">add</button>
-        </form>
-        <p>Name: {this.state.fullname}</p>
-        <p>Num: {this.state.phonenum}</p>
-        <p>Search: {this.state.searchString}</p>
+        <div className="b-add">
+          <form className="b-add__form" onSubmit={this.addRows}>
+            <div className="b-add__fullname"> 
+              <input type='text' name='fullname' value={this.state.fullname} onChange=  {this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
+            </div>
+            <div className="b-add__phonenum">
+              <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
+              maxLength="10" title="Введите номер сотового телефона"/>
+            </div>
+            <div className="b-add__button-group">
+              <button className="b-form-add__button-add" type="submit">Добавить</button> 
+            </div>
+          </form>
+        </div>
+        <p className="b-logs"></p>
       </section>
     );
   }

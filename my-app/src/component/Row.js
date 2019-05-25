@@ -14,23 +14,23 @@ class Row extends Component {
 
   updateRow(row) {
     const {fullname, phonenum} = this.state;
-    const {updateRow, listClients} = this.props;
+    const {updateRow, listClients, updateIdActive} = this.props;
     const newRow = Object.assign(row, {fullname, phonenum})
     this.setState({isUpdate: false});
-    console.log("row", row);
-    console.log("newRow", newRow);
-
-    console.log("listClients", listClients)
-    
     updateRow(newRow);
+    updateIdActive(0);
   }
 
   enableEditRow() {
+    const {row, updateIdActive} = this.props;
     this.setState({isUpdate: true});
+    updateIdActive(row.id);
   }
 
   cancelEditRow() {
+    const {updateIdActive} = this.props;
     this.setState({isUpdate: false});
+    updateIdActive(0);
   }
   
   removeRow(row) {
@@ -56,20 +56,40 @@ class Row extends Component {
 
   render() {
 
-    const {row, highlight} = this.props;
+    const {row, highlight, updateId} = this.props;
+
+    const {searchString} = this.props;
+    const regexp = new RegExp(`${searchString}`, 'gi');
+
+    console.log("--------------------")
+    console.log('searchString', searchString)
+    console.log("fullname", searchString, regexp.test(row.fullname))
+    console.log("phonenum", searchString, regexp.test(row.phone))
+    console.log()
+
+    let hide = false;
+
+    if (searchString) {
+      hide = (!regexp.test(row.fullname) && !regexp.test(row.phonenum))
+    }
+
+    // const hide = (searchString.length !== 0 && (!regexp.test(row.fullname) && !regexp.test(row.phonenum))) ? false : true;
+
+    console.log("hide", hide);
+
+    console.log("Test", row.id, updateId)
 
     return (
-      <li className="b-list-contacts__item">
+      <li className={`b-list-contacts__item ${hide ? "hide" : ""}`}>
         {
           !this.state.isUpdate ?
             <Fragment>
               <div className="b-list-contacts__item__fullname">{highlight(row.fullname)}</div>
               <div className="b-list-contacts__item__phonenum">{highlight(row.phonenum)}</div>
-              <div className="b-list-contacts__item__button_group">
-                <button className="b-list-contacts__item__button-edit" onClick={this.enableEditRow.bind(this)}>Изменить</button>
-                <button className="b-list-contacts__item__button-remove" onClick={this.removeRow.bind(this, row)}>Удалить</button>
+              <div className="b-list-contacts__item__button-group">
+                <button className="b-list-contacts__item__button-edit" onClick={this.enableEditRow.bind(this)} disabled={updateId != row.id && updateId != 0}>Изменить</button>
+                <button className="b-list-contacts__item__button-remove" onClick={this.removeRow.bind(this, row)} disabled={updateId != row.id && updateId != 0}>Удалить</button>
               </div>
-              {/* {row.id}.  - {highlight(row.phonenum)} */}
             </Fragment>
             :         
             <Fragment>
@@ -81,7 +101,7 @@ class Row extends Component {
                   <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
                   maxLength="10" title="Введите номер сотового телефона"/>
                 </div>
-                <div className="b-list-contacts__item__button_group">
+                <div className="b-list-contacts__item__button-group">
                   <button className="b-list-contacts__item__button-save" onClick={this.updateRow.bind(this, row)}>Сохранить</button>
                   <button className="b-list-contacts__item__button-cancel" onClick={this.cancelEditRow.bind(this)}>Отменить</button>
                 </div>
@@ -94,12 +114,14 @@ class Row extends Component {
 }
 
 const mapStateToProps = ({phonebook}) => ({
-  listClients: phonebook.listClients
+  listClients: phonebook.listClients,
+  updateId: phonebook.updateIdActive
 });
 
 const mapDispatchToProps = dispatch => ({
   updateRow: state => dispatch(actions.updateRow(state)),
-  removeRow: state => dispatch(actions.removeRow(state))
+  removeRow: state => dispatch(actions.removeRow(state)),
+  updateIdActive: state => dispatch(actions.updateIdActive(state))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Row);

@@ -24,6 +24,10 @@ button {
   width: 100px;
 }
 
+button:disabled {
+  background: #ccc;
+}
+
 .b-header, .b-footer {
   width: 100%;
   padding: 5px 10px;
@@ -133,7 +137,8 @@ button {
   color: #777;
 }
 
-.b-list-contacts {
+.b-list-contacts,
+.b-add {
   list-style-type: none;
   /* border: 1px dashed black; */
   padding: 10px 0;
@@ -146,7 +151,8 @@ button {
   transition: 1s
 }
 
-.b-list-contacts:hover {
+.b-list-contacts:hover,
+.b-add:hover {
   overflow: hidden;
   box-shadow: 0 0 0 1px rgba(0,0,0, .3),
   0 0 0 0 rgba(0,0,0, 0),
@@ -154,19 +160,47 @@ button {
   transition: 1s
 }
 
-.b-list-contacts__item {
+.b-list-contacts input,
+.b-add input {
+  /* padding: 0 10px; */
+  text-align: center;
+  border-radius: 10px;
+  border: none;  
+  box-shadow: 0 0 0 1px #777;
+}
+
+.b-list-contacts input[name="fullname"],
+.b-add input[name="fullname"] {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.b-list-contacts__item,
+.b-add__form {
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
   /* background: #eee; */
-  transition: .5s;  
+  transition: 1s;  
   line-height: 26px;
+  height: 42px;
   padding: 5px 10px;
+}
+
+.hide {
+  padding: 0 10px;
+  height: 0;
+  transition: 1s;
+}
+
+.b-list-contacts__not-found {
+  text-align: center;
 }
 
 .b-list-contacts__item:hover,
 .b-list-contacts__item:nth-of-type(even):hover {
   background: rgba(188, 98, 0, .5);
-  transition: .5s;
+  transition: 1s;
   color: white;
 }
 
@@ -175,6 +209,7 @@ button {
   transition: .5s;
 }
 
+.b-add__fullname,
 .b-list-contacts__item__fullname {
   /* border: 1px dashed black; */
   padding-top: 2px;
@@ -183,6 +218,7 @@ button {
   font-weight: bold;
 }
 
+.b-add__phonenum
 .b-list-contacts__item__phonenum {
   /* border: 1px dashed black; */
   width: 30%;
@@ -191,7 +227,12 @@ button {
   padding-top: 2px;
 }
 
-.b-list-contacts__item__button_group {}
+.b-add__button-group {
+  width: 30%;
+  text-align: right;
+}
+
+.b-list-contacts__item__button-group {}
 
 .b-list-contacts__item__button-edit {
   background-color: #337ab7;
@@ -203,10 +244,12 @@ button {
   border-color: #ac2925;
 }
 
+.b-form-add__button-add,
 .b-list-contacts__item__button-save {
   background-color: #398439;
   border-color: #255625;
 }
+
 .b-list-contacts__item__button-cancel {
   background-color: #ec971f;
   border-color: #d58512;

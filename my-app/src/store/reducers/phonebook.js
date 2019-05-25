@@ -1,8 +1,10 @@
 export const ADD_ROWS = '@phonebook/ADD_ROWS';
 export const REMOVE_ROWS = '@phonebook/REMOVE_ROWS';
 export const UPDATE_ROWS = '@phonebook/UPDATE_ROWS';
+export const UPDATE_ID_ACTIVE = '@phonebook/UPDATE_ID_ACTIVE';
 
 const initialState = {
+  updateIdActive : 0,
   id_generator: 3,
   listClients: [
     {
@@ -48,6 +50,11 @@ const removeRow = (state, action) => ({
   listClients: state.listClients.filter(client => client.id !== action.payload)
 });
 
+const updateIdActive = (state, action) => ({
+  ...state,
+  updateIdActive: action.payload
+})
+
 function phonebook (state = initialState, action) {
   switch (action.type) {
     case ADD_ROWS:
@@ -56,6 +63,8 @@ function phonebook (state = initialState, action) {
       return removeRow (state, action);
     case UPDATE_ROWS:
       return updateRow (state, action);
+    case UPDATE_ID_ACTIVE:
+      return updateIdActive (state, action);
     default:
       return state; 
   }

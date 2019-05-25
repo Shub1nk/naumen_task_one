@@ -1,7 +1,8 @@
 import {
   ADD_ROWS,
   REMOVE_ROWS,
-  UPDATE_ROWS
+  UPDATE_ROWS,
+  UPDATE_ID_ACTIVE
 } from '../reducers/phonebook';
 
 export const addRow = payload => ({
@@ -16,5 +17,10 @@ export const removeRow = payload => ({
 
 export const updateRow = payload => ({
   type: UPDATE_ROWS,
+  payload
+});
+
+export const updateIdActive = payload => ({
+  type: UPDATE_ID_ACTIVE,
   payload
 });
