@@ -61,12 +61,6 @@ class Row extends Component {
     const {searchString} = this.props;
     const regexp = new RegExp(`${searchString}`, 'gi');
 
-    console.log("--------------------")
-    console.log('searchString', searchString)
-    console.log("fullname", searchString, regexp.test(row.fullname))
-    console.log("phonenum", searchString, regexp.test(row.phone))
-    console.log()
-
     let hide = false;
 
     if (searchString) {
@@ -74,10 +68,6 @@ class Row extends Component {
     }
 
     // const hide = (searchString.length !== 0 && (!regexp.test(row.fullname) && !regexp.test(row.phonenum))) ? false : true;
-
-    console.log("hide", hide);
-
-    console.log("Test", row.id, updateId)
 
     return (
       <li className={`b-list-contacts__item ${hide ? "hide" : ""}`}>

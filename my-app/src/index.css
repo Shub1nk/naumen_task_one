@@ -148,7 +148,16 @@ button:disabled {
   box-shadow: 0 0 0 1px rgba(0,0,0, .3),
   0 0 5px 0 rgba(0,0,0, 1),
   0 0 0 0 inset rgba(0,0,0, .3);
-  transition: 1s
+  transition: 1s;
+}
+
+.b-list-contacts {
+  overflow: auto;
+  height: 500px;
+}
+
+.b-list-contacts::-webkit-scrollbar {
+  width: 0px;
 }
 
 .b-list-contacts:hover,
@@ -199,9 +208,10 @@ button:disabled {
 
 .b-list-contacts__item:hover,
 .b-list-contacts__item:nth-of-type(even):hover {
-  background: rgba(188, 98, 0, .5);
+  /* background: rgba(188, 98, 0, .5); */
   transition: 1s;
-  color: white;
+  /* color: white; */
+  box-shadow: 0 5px 3px -5px inset, 0 -5px 3px -5px inset
 }
 
 .b-list-contacts__item:nth-of-type(even) {
@@ -230,6 +240,12 @@ button:disabled {
 .b-add__button-group {
   width: 30%;
   text-align: right;
+}
+
+.b-add__button-group[disabled]
+{
+  pointer-events: none;
+  opacity: 0.4;
 }
 
 .b-list-contacts__item__button-group {}
@@ -264,8 +280,8 @@ button:disabled {
 .b-form-add__button-add {
   position: relative;
   height: 32px;
-  width: 180px;
-  right: -32px;
+  width: 210px;
+  right: -2px;
   display: block;
   color: white;
   outline: none;
@@ -284,6 +300,10 @@ button:disabled {
   background-size: 113px;
   animation: move-fon 3s infinite linear;
   cursor: not-allowed;
+}
+
+.b-logs {
+  text-align: center;
 }
 
 @keyframes move-fon {

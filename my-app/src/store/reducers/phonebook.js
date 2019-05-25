@@ -15,13 +15,13 @@ const initialState = {
     {
       id: 2,
       fullname: 'Иван Иванов',
-      phonenum: '9326031633'
+      phonenum: '9024436898'
     },
     {
       id: 3,
       fullname: 'Степан Степанов',
-      phonenum: '9326031699'
-    }
+      phonenum: '9841364898'
+    }    
   ],
   isShowFilter: false
 };

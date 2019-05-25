@@ -14,7 +14,10 @@ class Phonebook extends Component {
       isSendData: false,
       buttonAddText: 'Добавить запись',
       errorAdd: false, 
-      logs: ''
+      logs: {
+        text: '',
+        color: ''
+      }
     }
 
     this.addRows = this.addRow.bind(this);
@@ -23,6 +26,8 @@ class Phonebook extends Component {
 
   addRow(e) {
     e.preventDefault();
+
+    const {listClients} = this.props;
 
     this.setState({isSendData: true, buttonAddText: 'Проверяем данные...'});
 
@@ -33,18 +38,18 @@ class Phonebook extends Component {
       const {addRow} = self.props;
       const newRow = {fullname, phonenum};
 
-      if (fullname && phonenum) {
-        addRow(newRow);
-        self.setState({isSendData: false, buttonAddText: "Данные добавлены!"})
-        setTimeout(() => {
-          self.setState({buttonAddText: 'Добавить запись'})
-        }, 2000)
+      const findFullname = listClients.find(item => item.fullname === fullname);
+      const findPhonenum = listClients.find(item => item.phonenum === phonenum);
+
+      if (!findFullname && !findPhonenum) {
+        addRow(newRow)
+        self.setState({isSendData: false, buttonAddText: "Данные добавлены!", fullname: '', phonenum: '', logs: {text: `Добавлен новый контакт: ${fullname} - ${phonenum}`, color: 'green'}})
       } else {
-        self.setState({isSendData: false, buttonAddText: "Ошибка!", errorAdd: true, logs: "Оба поля пустые"})
-        setTimeout(() => {
-          self.setState({buttonAddText: 'Добавить запись', errorAdd: false})
-        }, 2000)
+        self.setState({isSendData: false, buttonAddText: "Ошибка!", errorAdd: true, logs: { text: "Есть совпадение по имени или телефону", color: 'red'}})
       }
+      setTimeout(() => {
+        self.setState({buttonAddText: 'Добавить запись', errorAdd: false})
+      }, 2000)
     }, 3000)
 
   };
@@ -133,12 +138,12 @@ class Phonebook extends Component {
               <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
               maxLength="10" title="Введите номер сотового телефона"/>
             </div>
-            <div className="b-add__button-group">
+            <div className="b-add__button-group" disabled={!this.state.fullname || !this.state.phonenum}>
               <button className="b-form-add__button-add" type="submit" disabled={this.state.isSendData} style={this.state.errorAdd ? {background: "#c9302c"} : {}}>{this.state.buttonAddText}</button> 
             </div>
           </form>
         </div>
-        <p className="b-logs">{this.state.logs}</p>
+        <p className="b-logs" style={{color: this.state.logs.color}}>{this.state.logs.text}</p>
       </section>
     );
   }
