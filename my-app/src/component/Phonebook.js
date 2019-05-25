@@ -10,7 +10,11 @@ class Phonebook extends Component {
     this.state = {
       fullname: '',
       phonenum: '',
-      searchString: ''
+      searchString: '',
+      isSendData: false,
+      buttonAddText: 'Добавить запись',
+      errorAdd: false, 
+      logs: ''
     }
 
     this.addRows = this.addRow.bind(this);
@@ -20,12 +24,29 @@ class Phonebook extends Component {
   addRow(e) {
     e.preventDefault();
 
-    const {fullname, phonenum} = this.state;
-    const {addRow} = this.props;
-    const newRow = {fullname, phonenum};
-    addRow(newRow);
+    this.setState({isSendData: true, buttonAddText: 'Проверяем данные...'});
 
-    this.setState({fullname: '', phonenum: ''});
+    const self = this;
+
+    setTimeout(() => {
+      const {fullname, phonenum} = self.state;
+      const {addRow} = self.props;
+      const newRow = {fullname, phonenum};
+
+      if (fullname && phonenum) {
+        addRow(newRow);
+        self.setState({isSendData: false, buttonAddText: "Данные добавлены!"})
+        setTimeout(() => {
+          self.setState({buttonAddText: 'Добавить запись'})
+        }, 2000)
+      } else {
+        self.setState({isSendData: false, buttonAddText: "Ошибка!", errorAdd: true, logs: "Оба поля пустые"})
+        setTimeout(() => {
+          self.setState({buttonAddText: 'Добавить запись', errorAdd: false})
+        }, 2000)
+      }
+    }, 3000)
+
   };
 
   onChangeHandler(field, event) {
@@ -113,11 +134,11 @@ class Phonebook extends Component {
               maxLength="10" title="Введите номер сотового телефона"/>
             </div>
             <div className="b-add__button-group">
-              <button className="b-form-add__button-add" type="submit">Добавить</button> 
+              <button className="b-form-add__button-add" type="submit" disabled={this.state.isSendData} style={this.state.errorAdd ? {background: "#c9302c"} : {}}>{this.state.buttonAddText}</button> 
             </div>
           </form>
         </div>
-        <p className="b-logs"></p>
+        <p className="b-logs">{this.state.logs}</p>
       </section>
     );
   }
