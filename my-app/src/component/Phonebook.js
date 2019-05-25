@@ -14,6 +14,7 @@ class Phonebook extends Component {
     }
 
     this.addRows = this.addRow.bind(this);
+    this.clearStringSearch = this.clearStringSearch.bind(this);
   }
 
   addRow(e) {
@@ -22,7 +23,6 @@ class Phonebook extends Component {
     const {fullname, phonenum} = this.state;
     const {addRow} = this.props;
     const newRow = {fullname, phonenum};
-    // console.log(fullname, phonenum);
     addRow(newRow);
 
     this.setState({fullname: '', phonenum: ''});
@@ -42,6 +42,10 @@ class Phonebook extends Component {
     }
 
     this.setState({[field]: value});
+  }
+
+  clearStringSearch() {
+    this.setState({searchString: ''});
   }
 
   render() {
@@ -83,9 +87,9 @@ class Phonebook extends Component {
       <section className="b-phonebook">
         <div className="b-phonebook__search">
           <input type='text' name='search' value={this.state.searchString} onChange={this.onChangeHandler.bind(this, "searchString")} placeholder="Введите имя или номер"
-          autoComplete="off"/>
-          <span></span>
-          {!this.state.searchString && <p className="b-phonebook__coincidence">Совпадений: {listItems.length}</p>}
+          autoComplete="off" autoFocus/>
+          {this.state.searchString && <span onClick={this.clearStringSearch}></span>}
+          {this.state.searchString && <p className="b-phonebook__coincidence">Совпадений: {listItems.length}</p>}
         </div>
         <ul>
           {
