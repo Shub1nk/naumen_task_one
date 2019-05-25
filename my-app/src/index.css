@@ -14,6 +14,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  border: none;
+  outline: none;  
+  border-radius: 5px;
+  color: white;
+  margin-left: 10px;
+  padding: 3px 10px;
+  width: 100px;
+}
+
 .b-header, .b-footer {
   width: 100%;
   padding: 5px 10px;
@@ -44,7 +54,7 @@ body {
 }
 
 .b-phonebook__search {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   /* border: 1px dashed black; */
   position: relative;
 }
@@ -113,12 +123,97 @@ body {
 }
 
 .b-phonebook__coincidence {
-  /* position: absolute;
-  top: 5px;
-  right: 0; */
-  text-align: right;
-  padding-top: 5px;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  /* text-align: right; */
+  /* padding-top: 5px; */
   font-size: 12px;
   font-style: italic;
   color: #777;
+}
+
+.b-list-contacts {
+  list-style-type: none;
+  /* border: 1px dashed black; */
+  padding: 10px 0;
+  border-radius: 20px;
+  /* overflow: hidden; */
+  /* background: #eee; */
+  box-shadow: 0 0 0 1px rgba(0,0,0, .3),
+  0 0 5px 0 rgba(0,0,0, 1),
+  0 0 0 0 inset rgba(0,0,0, .3);
+  transition: 1s
+}
+
+.b-list-contacts:hover {
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0,0,0, .3),
+  0 0 0 0 rgba(0,0,0, 0),
+  0 1px 3px 0 inset rgba(0,0,0, .5);
+  transition: 1s
+}
+
+.b-list-contacts__item {
+  display: flex;
+  justify-content: space-between;
+  /* background: #eee; */
+  transition: .5s;  
+  line-height: 26px;
+  padding: 5px 10px;
+}
+
+.b-list-contacts__item:hover,
+.b-list-contacts__item:nth-of-type(even):hover {
+  background: rgba(188, 98, 0, .5);
+  transition: .5s;
+  color: white;
+}
+
+.b-list-contacts__item:nth-of-type(even) {
+  /* background: rgba(188, 98, 0, .3); */
+  transition: .5s;
+}
+
+.b-list-contacts__item__fullname {
+  /* border: 1px dashed black; */
+  padding-top: 2px;
+  padding-left: 10px;
+  width: 40%;
+  font-weight: bold;
+}
+
+.b-list-contacts__item__phonenum {
+  /* border: 1px dashed black; */
+  width: 30%;
+  font-weight: bold;
+  /* text-align: center; */
+  padding-top: 2px;
+}
+
+.b-list-contacts__item__button_group {}
+
+.b-list-contacts__item__button-edit {
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.b-list-contacts__item__button-remove {
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+
+.b-list-contacts__item__button-save {
+  background-color: #398439;
+  border-color: #255625;
+}
+.b-list-contacts__item__button-cancel {
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+
+.b-list-contacts__item__form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

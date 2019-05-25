@@ -91,7 +91,7 @@ class Phonebook extends Component {
           {this.state.searchString && <span onClick={this.clearStringSearch}></span>}
           {this.state.searchString && <p className="b-phonebook__coincidence">Совпадений: {listItems.length}</p>}
         </div>
-        <ul>
+        <ul className="b-list-contacts">
           {
             listItems.map((row, i) => {
               return (

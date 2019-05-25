@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import actions from '../store/actions';
 
@@ -59,26 +59,34 @@ class Row extends Component {
     const {row, highlight} = this.props;
 
     return (
-      <li>
+      <li className="b-list-contacts__item">
         {
           !this.state.isUpdate ?
-            <div>
-              {row.id}. {highlight(row.fullname)} - {highlight(row.phonenum)}
-              <button onClick={this.enableEditRow.bind(this)}>Редактировать</button>
-              <button onClick={this.removeRow.bind(this, row)}>Удалить</button>
-            </div>
+            <Fragment>
+              <div className="b-list-contacts__item__fullname">{highlight(row.fullname)}</div>
+              <div className="b-list-contacts__item__phonenum">{highlight(row.phonenum)}</div>
+              <div className="b-list-contacts__item__button_group">
+                <button className="b-list-contacts__item__button-edit" onClick={this.enableEditRow.bind(this)}>Изменить</button>
+                <button className="b-list-contacts__item__button-remove" onClick={this.removeRow.bind(this, row)}>Удалить</button>
+              </div>
+              {/* {row.id}.  - {highlight(row.phonenum)} */}
+            </Fragment>
             :         
-            <div>
-              <form onSubmit={this.updateRow.bind(this, row)}>
-                <input type='text' name='fullname' value={this.state.fullname} onChange={this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
-                <br/>
-                <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
-                maxLength="10" title="Введите номер сотового телефона"/>
-                <br/>
-                <button onClick={this.updateRow.bind(this, row)}>Сохранить</button>
-                <button onClick={this.cancelEditRow.bind(this)}>Отменить</button>
-              </form>
-            </div>
+            <Fragment>
+              <form className="b-list-contacts__item__form" onSubmit={this.updateRow.bind(this, row)}>
+                <div className="b-list-contacts__item__fullname">
+                  <input type='text' name='fullname' value={this.state.fullname} onChange={this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
+                </div>
+                <div className="b-list-contacts__item__phonenum">
+                  <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
+                  maxLength="10" title="Введите номер сотового телефона"/>
+                </div>
+                <div className="b-list-contacts__item__button_group">
+                  <button className="b-list-contacts__item__button-save" onClick={this.updateRow.bind(this, row)}>Сохранить</button>
+                  <button className="b-list-contacts__item__button-cancel" onClick={this.cancelEditRow.bind(this)}>Отменить</button>
+                </div>
+              </form>            
+            </Fragment>
         } 
       </li>
     );

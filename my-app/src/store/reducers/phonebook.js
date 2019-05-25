@@ -30,10 +30,18 @@ const addRow = (state, action) => ({
     listClients: state.listClients.concat(Object.assign(action.payload, {id: state.id_generator + 1}))
 });
 
-const updateRow = (state, action) => ({
-  ...state,
-  listClients: state.listClients.filter(client => client.id !== action.payload.id).concat(action.payload)
-})
+const updateRow = (state, action) => {
+
+  const newList = state.listClients.map(item => {
+    if (item.id !== action.payload.id) return item;
+    return action.payload;
+  });
+  
+  return {
+    ...state,
+    listClients: newList
+  }
+}
 
 const removeRow = (state, action) => ({
   ...state,
