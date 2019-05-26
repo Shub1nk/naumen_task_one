@@ -38,15 +38,32 @@ class Phonebook extends Component {
       const {addRow} = self.props;
       const newRow = {fullname, phonenum};
 
-      const findFullname = listClients.find(item => item.fullname === fullname);
-      const findPhonenum = listClients.find(item => item.phonenum === phonenum);
+      const findFullname = listClients.some(item => item.fullname === fullname);
+      const findPhonenum = listClients.some(item => item.phonenum === phonenum);
 
-      if (!findFullname && !findPhonenum) {
+      if (findFullname && findPhonenum) {
+        self.setState({
+          isSendData: false, 
+          buttonAddText: "Ошибка!", 
+          errorAdd: true, 
+          logs: { text: "Есть совпадение по имени и телефону", color: 'red'}})
+      } else if (findFullname && !findPhonenum) {
+        self.setState({
+          isSendData: false, 
+          buttonAddText: "Ошибка!", 
+          errorAdd: true, 
+          logs: { text: "Есть совпадение по имени", color: 'red'}})
+      } else if (!findFullname && findPhonenum) {
+        self.setState({
+          isSendData: false, 
+          buttonAddText: "Ошибка!", 
+          errorAdd: true, 
+          logs: { text: "Есть совпадение по телефону", color: 'red'}})
+      } else {
         addRow(newRow)
         self.setState({isSendData: false, buttonAddText: "Данные добавлены!", fullname: '', phonenum: '', logs: {text: `Добавлен новый контакт: ${fullname} - ${phonenum}`, color: 'green'}})
-      } else {
-        self.setState({isSendData: false, buttonAddText: "Ошибка!", errorAdd: true, logs: { text: "Есть совпадение по имени или телефону", color: 'red'}})
-      }
+      } 
+
       setTimeout(() => {
         self.setState({buttonAddText: 'Добавить запись', errorAdd: false})
       }, 2000)

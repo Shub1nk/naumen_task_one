@@ -14,7 +14,7 @@ class Row extends Component {
 
   updateRow(row) {
     const {fullname, phonenum} = this.state;
-    const {updateRow, listClients, updateIdActive} = this.props;
+    const {updateRow, updateIdActive} = this.props;
     const newRow = Object.assign(row, {fullname, phonenum})
     this.setState({isUpdate: false});
     updateRow(newRow);
@@ -67,8 +67,6 @@ class Row extends Component {
       hide = (!regexp.test(row.fullname) && !regexp.test(row.phonenum))
     }
 
-    // const hide = (searchString.length !== 0 && (!regexp.test(row.fullname) && !regexp.test(row.phonenum))) ? false : true;
-
     return (
       <li className={`b-list-contacts__item ${hide ? "hide" : ""}`}>
         {
@@ -77,23 +75,45 @@ class Row extends Component {
               <div className="b-list-contacts__item__fullname">{highlight(row.fullname)}</div>
               <div className="b-list-contacts__item__phonenum">{highlight(row.phonenum)}</div>
               <div className="b-list-contacts__item__button-group">
-                <button className="b-list-contacts__item__button-edit" onClick={this.enableEditRow.bind(this)} disabled={updateId != row.id && updateId != 0}>Изменить</button>
-                <button className="b-list-contacts__item__button-remove" onClick={this.removeRow.bind(this, row)} disabled={updateId != row.id && updateId != 0}>Удалить</button>
+                <button 
+                  className="b-list-contacts__item__button-edit" 
+                  onClick={this.enableEditRow.bind(this)} 
+                  disabled={updateId !== row.id && updateId !== 0}>
+                    Изменить
+                </button>
+                <button 
+                  className="b-list-contacts__item__button-remove" 
+                  onClick={this.removeRow.bind(this, row)} 
+                  disabled={updateId !== row.id && updateId !== 0}>
+                    Удалить
+                </button>
               </div>
             </Fragment>
             :         
             <Fragment>
               <form className="b-list-contacts__item__form" onSubmit={this.updateRow.bind(this, row)}>
                 <div className="b-list-contacts__item__fullname">
-                  <input type='text' name='fullname' value={this.state.fullname} onChange={this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
+                  <input 
+                    type='text' name='fullname' value={this.state.fullname} 
+                    onChange={this.onChangeHandler.bind(this, "fullname")} placeholder="Введите имя"/>
                 </div>
                 <div className="b-list-contacts__item__phonenum">
-                  <input type='text' name='phonenum' value={this.state.phonenum} onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер" 
-                  maxLength="10" title="Введите номер сотового телефона"/>
+                  <input 
+                    type='text' name='phonenum' value={this.state.phonenum} 
+                    onChange={this.onChangeHandler.bind(this, "phonenum")} placeholder="Введите номер"
+                    maxLength="10" title="Введите номер сотового телефона"/>
                 </div>
                 <div className="b-list-contacts__item__button-group">
-                  <button className="b-list-contacts__item__button-save" onClick={this.updateRow.bind(this, row)}>Сохранить</button>
-                  <button className="b-list-contacts__item__button-cancel" onClick={this.cancelEditRow.bind(this)}>Отменить</button>
+                  <button 
+                    className="b-list-contacts__item__button-save" 
+                    onClick={this.updateRow.bind(this, row)}>
+                      Сохранить
+                  </button>
+                  <button 
+                    className="b-list-contacts__item__button-cancel" 
+                    onClick={this.cancelEditRow.bind(this)}>
+                      Отменить
+                  </button>
                 </div>
               </form>            
             </Fragment>
